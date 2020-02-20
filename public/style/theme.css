@@ -1,0 +1,77 @@
+:root{
+    --main-bg-color:#F5F5F5;
+    --main-text-color:black;
+    --scroll-bg-color:rgba(0,0,0,.5);
+    --logo-text-color:#40CAD4;
+
+    --total-board-top-color:black;
+    --total-board-bottom-color:#0B4977;
+
+    --block-size-color:#6A0CE0;
+    --total-power-color:#F7B500;
+
+    --null-block-bg-color:#d8d8d8;
+    --ticket-block-bg-color:#0091ff;
+    --other-block-border-color:#0091ff;
+
+    --border-bottom-color:#eee;
+    --footer-text-color:#333;
+    --board-bg-color:white;
+
+    --overview-bg-color:white;
+    --overview-bg-dark-color:#F5F7FA;
+
+    --general-title-bg-color:white;
+    --general-title-text-color:black;
+
+    --message-list-method-bg-color:white;
+    --message-list-method-text-color:black;
+
+    --overview-text-color:black;
+    --link-color:#0062ff;
+    --white:#fff;
+    --table-header-bg-color:white;
+    --table-header-border-color:#EBEEF5;
+    --table-header-text-color:black;
+    --table-row-bg-color:white;
+    --table-row-hover-bg-color:#85CBFF;
+    --table-row-hover-text-color:white;
+    --table-row-striped-bg-color:#F5F7FA;
+    
+}
+:root[theme='dark']{
+    --main-bg-color:#0A0D13;
+    --main-text-color:white;
+    --scroll-bg-color:white;
+    --logo-text-color:#40CAD4;
+
+    --total-board-top-color:#999;
+    --total-board-bottom-color:#FFF;
+
+    --block-size-color:#F7B500;
+    --total-power-color:#F93C53;
+
+    --null-block-bg-color:#FF9C93;
+    --ticket-block-bg-color:#F7B500;
+    --other-block-border-color:#F7B500;
+
+    --footer-text-color:#333;
+    --board-bg-color:#182232;
+    --overview-bg-color:#121A23;
+    --overview-bg-dark-color:#0B0E13;
+    --general-title-bg-color:white;
+    --general-title-text-color:black;
+    --message-list-method-bg-color:white;
+    --message-list-method-text-color:black;
+    --overview-text-color:white;
+    --link-color:#32C5FF;
+    --white:#fff;
+    --table-header-bg-color:#151E42;
+    --table-header-border-color:#151E42;
+    --table-header-text-color:white;
+    --table-row-bg-color:#121A26;
+    --table-row-hover-bg-color:#96ABFF;
+    --table-row-hover-text-color:white;
+    --table-row-striped-bg-color:#10151F;
+    --border-bottom-color:#0A0D13
+}

@@ -1,0 +1,83 @@
+:root{
+    $--color-primary: #0062ff;
+    $--font-path: '~element-ui/lib/theme-chalk/fonts';
+    @import "~element-ui/packages/theme-chalk/src/index";
+}
+:root[theme='dark']{
+    $--color-primary: #32C5FF;
+    $--font-path: '~element-ui/lib/theme-chalk/fonts';
+    @import "~element-ui/packages/theme-chalk/src/index";
+}
+.el-menu--horizontal ul {
+    background: var(--board-bg-color)!important;
+    li{
+        background: var(--board-bg-color)!important;
+        &:hover,&.is-active{
+            color: var(--main-text-color)!important;
+        }
+    }
+}
+.el-select{
+    .el-input input{
+        background: var(--board-bg-color)!important;
+        color: var(--main-text-color)!important;
+    }
+}
+.el-select-dropdown{
+    background: var(--board-bg-color)!important;
+    li{
+        color: var(--main-text-color)!important;
+        &:hover,&.selected{
+            color: var(--link-color)!important;
+        }
+
+    }
+}
+.font-22{
+    font-size: 22px;
+}
+.font-20{
+    font-size: 20px;
+}
+.font-18{
+    font-size: 18px;
+}
+.font-16{
+    font-size: 16px;
+}
+.font-14{
+    font-size: 14px;
+}
+.font-12{
+    font-size: 12px;
+}
+.top-40{
+    margin-top: 40px;
+}
+.top-30{
+    margin-top: 30px;
+}
+.top-20{
+    margin-top: 20px;
+}
+.top-10{
+    margin-top: 10px;
+}
+.bottom-40{
+    margin-bottom: 40px;
+}
+.bottom-30{
+    margin-bottom: 30px;
+}
+.bottom-20{
+    margin-bottom: 20px;
+}
+.bottom-10{
+    margin-bottom: 10px;
+}
+.border-bottom{
+    border-bottom: 1px solid var(--border-bottom-color);
+}
+.el-popover{
+    word-break: break-word
+}
