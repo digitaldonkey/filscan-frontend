@@ -15,7 +15,7 @@ const mixin = {
       return this.$store.state.loadCount;
     },
     isMobile() {
-      return window.innerWidth < 768;
+      return this.$store.state.isMobile;
     },
     routeName() {
       return this.$t("routeName")[this.$route.name];
@@ -34,6 +34,9 @@ const mixin = {
     }
   },
   methods: {
+    windowResize() {
+      this.$store.commit('setIsMobile', window.innerWidth < 768);
+    },
     goTo(name = "/", { params, query } = {}) {
       this.$router.push({
         name,

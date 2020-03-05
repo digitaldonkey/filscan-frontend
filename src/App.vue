@@ -22,6 +22,13 @@ export default {
   methods: {
     ...mapMutations(["setRate"])
   },
+  created() {
+    window.addEventListener("resize", this.windowResize);
+    this.windowResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.windowResize);
+  },
   mounted() {
     this.setRate(window.innerWidth / 1920);
     window.addEventListener("orientationchange", () => {
