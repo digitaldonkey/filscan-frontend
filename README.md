@@ -156,7 +156,7 @@ By default, the profiles are in the root directory of the project. You can modi
 
 **Example:**
 
-If you want to change the server address, you can open the file .env.development. Then you will see the default value of **VUE_APP_BASE_URL** is "http://192.168.1.2:8700/v0/filscan", modify it according to your actual server address. Please notice that you should run "yarn serve" or "npm run serve" to apply this change.
+If you want to change the server address, you can rename `example-dot-env.development` to `.env.development` to change the default value of **VUE_APP_BASE_URL** is "https://forceup.io:8700/v0/filscan", modify it according to your actual server address. Please notice that you should run "yarn serve" or "npm run serve" to apply this change.
 
 ### Build
 ```
