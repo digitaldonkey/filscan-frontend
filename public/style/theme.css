@@ -37,7 +37,7 @@
     --table-row-hover-bg-color:#85CBFF;
     --table-row-hover-text-color:white;
     --table-row-striped-bg-color:#F5F7FA;
-    
+
 }
 :root[theme='dark']{
     --main-bg-color:#0A0D13;
