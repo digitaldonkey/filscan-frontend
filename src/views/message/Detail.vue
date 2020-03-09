@@ -156,7 +156,7 @@ export default {
                       trigger="hover"
                       content={paramTip}
                     >
-                      <i class="el-icon-warning-outline" slot="reference"></i>
+                      <i class="el-icon-question" slot="reference"></i>
                     </el-popover>
                     <span class="params-value">{sourceMap[item.key]}</span>
                   </div>

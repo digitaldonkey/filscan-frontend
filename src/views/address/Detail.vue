@@ -165,6 +165,7 @@ export default {
           return result;
         });
       } catch (e) {
+        // eslint-disable-next-line
         console.log(e);
       }
     }

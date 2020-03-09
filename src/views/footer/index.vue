@@ -25,6 +25,7 @@ export default {
         let res = await getActivePeerCount();
         this.count = this.formatNumber(Number(res.count));
       } catch (e) {
+        // eslint-disable-next-line
         console.log(e);
       }
     }
