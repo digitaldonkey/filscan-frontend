@@ -3,6 +3,8 @@ import light from "../chart/theme/light";
 import dark from "../chart/theme/dark";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 dayjs.extend(advancedFormat);
+import resize from 'vue-resize-directive'
+
 const mixin = {
   computed: {
     atIndex() {
@@ -32,6 +34,9 @@ const mixin = {
     rate() {
       return this.isMobile ? 1 : this.$store.state.rate;
     }
+  },
+  directives: {
+    resize,
   },
   methods: {
     windowResize() {
@@ -136,7 +141,7 @@ const mixin = {
       let c = Math.floor(Math.log(num) / Math.log(k));
       num = (num / Math.pow(k, c)).toFixed(len) + " " + units[c];
       return num;
-    }
+    },
   },
   filters: {
     formatNumber(v) {
