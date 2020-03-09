@@ -1,0 +1,54 @@
+// Total Chart item info.
+@mixin chartInfo($color, $breakpont) {
+  @include colorDot($color);
+  font-weight: bold;
+  line-height: .75rem;
+  color: var(--total-board-top-color);
+  font-size: .6875rem;
+  padding-bottom: .75rem;
+  @media (min-width: $breakpont) {
+    font-size: 1rem;
+  }
+}
+// Total Chart item value.
+@mixin chartValue($color, $breakpont) {
+  color: $color;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  @media (min-width: $breakpont) {
+    font-size: 1.625rem;
+  }
+}
+// Total Chart dot before item info.
+@mixin colorDot($color) {
+  &::before {
+    content: "";
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: .75rem;
+    height: .75rem;
+    background: $color;
+    border-radius: 50%;
+    margin-right: .5rem;
+  }
+}
+
+// Panel pane style
+@mixin panel {
+  @include clearfix;
+  width: auto;
+  background: var(--board-bg-color);
+  border-radius: $panel-border-radius;
+  box-shadow: 0 1px 7px 9px rgba(0, 0, 0, 0.03);
+  padding: $vertical-space $horizontal-space;
+  margin-bottom: $vertical-space;
+}
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
