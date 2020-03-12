@@ -135,7 +135,6 @@ export default {
   }
   .nav-bar {
     position: fixed;
-    border: 2px solid red;
     width: 100%;
     top: $header-height;
     height: calc(100% - #{ $header-height });
