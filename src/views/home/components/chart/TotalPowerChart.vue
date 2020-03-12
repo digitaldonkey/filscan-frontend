@@ -1,21 +1,22 @@
 <template>
   <div
-    class="total-power-chart"
+    class="total-power-chart total-chart--chart"
     v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    element-loading-background="transparent"
+    v-resize:debounce="resizeChart"
   >
     <div class="info-con">
-      <div class="power-info">
+      <div class="power-info title">
         <div>
           {{ $t("home.totalPower.power") }}
         </div>
-        <div class="top-10 bottom-10" v-show="!loading">{{ totalPower }}</div>
+        <div class="" v-show="!loading">{{ totalPower }}</div>
       </div>
-      <div class="storage-info">
+      <div class="storage-info title">
         <div>
           {{ $t("home.totalPower.capacity") }}
         </div>
-        <div class="top-10" v-show="!loading">{{ totalPower }}</div>
+        <div class="" v-show="!loading">{{ storageCapacity }}</div>
       </div>
     </div>
     <div class="chart-con" ref="power"></div>
@@ -43,6 +44,9 @@ export default {
     }
   },
   methods: {
+    async resizeChart () {
+      chart.resize();
+    },
     drawPowerChart() {
       const series = this.dataList;
       const { axisLine, seriesItem, area } = this.chartTheme.totalPower;
@@ -146,45 +150,55 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.total-power-chart {
-  display: flex;
+  .total-power-chart {
+    $breakpont: 61.25rem;
+    $color: var(--total-power-color);
 
-  .info-con {
-    //flex: 2;
-    min-width: 180px;
     display: flex;
     flex-direction: column;
-    & > div {
-      div:last-child {
-        font-size: 26px;
-        color: var(--total-power-color);
-      }
-      div:first-child {
-        color: var(--total-board-top-color);
-        font-weight: bold;
-      }
-    }
-  }
-  .chart-con {
-    flex: 1;
+    justify-content: space-between;
+    // Defined h/w is required to render chart.
+    width: 100%;
     height: 100%;
-  }
-  @media (max-width: 768px) {
-    .info-con .power-info,
-    .info-con .storage-info {
-      & > div:last-child {
-        margin-top: 5px !important;
-        font-size: 12px !important;
+
+    @media (min-width: $breakpont) {
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .info-con {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+      padding-bottom: $vertical-space;
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+
+        // title
+        div:first-child {
+          @include chartInfo($color, $breakpont);
+        }
+        &:last-of-type div:first-child{
+          // Hide second color dot, but keep space.
+          &:before {
+            visibility: hidden;
+          }
+        }
+        // value
+        div:last-child {
+          @include chartValue($color, $breakpont);
+        }
       }
     }
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
-    .info-con {
-      flex: 2;
-    }
+
     .chart-con {
-      flex: 3;
+      align-self: flex-end;
+      flex: 1;
+      height: 4rem;
+      width: 100%;
     }
   }
-}
 </style>

@@ -25,19 +25,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .metrics {
-  .chart-con {
-    display: flex;
-    & > div {
-      flex: 1;
-      margin-right: 20px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-  @media (max-width: 750px) {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 48rem) {
     .chart-con {
-      display: block;
+      display: flex;
+      & > div {
+        flex: 1;
+        margin-right: $vertical-space;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
     }
   }
 }

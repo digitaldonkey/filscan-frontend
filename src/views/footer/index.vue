@@ -39,7 +39,6 @@ export default {
 .footer {
   position: relative;
   color: var(--footer-text-color);
-  box-sizing: border-box;
   background: var(--board-bg-color);
   height: 70px;
   z-index: 10;

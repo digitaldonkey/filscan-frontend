@@ -1,24 +1,34 @@
 <template>
-  <div class="home-con bottom-10">
-    <div class="board-con bottom-20">
-      <total-board />
-      <total-chart />
+  <div class="home-con">
+    <TotalBoard />
+    <TotalChart />
+    <div class="l-block-message-tables">
+      <div class="panel">
+        <h3 class="block-title">{{ $t('home.blockTable.title') }}</h3>
+        <BlockTable />
+      </div>
+      <div class="panel">
+        <h3 class="block-title">{{ $t('home.messageTable.title') }}</h3>
+        <MessageTable />
+      </div>
     </div>
-    <div class="block-message-table bottom-20">
-      <block-table />
-      <message-table />
+    <div class="panel l-ticket-chain">
+      <ticket-chain
+        @hash-change="handleHashChange"
+        @height-change="handleHeightChange"
+        v-if="atIndex"
+      />
     </div>
-    <ticket-chain
-      @hash-change="handleHashChange"
-      @height-change="handleHeightChange"
-      v-if="!isMobile && atIndex"
-    />
   </div>
 </template>
 
 <script>
-import * as components from "./components";
 import TicketChain from "../tipset/components/TicketChain";
+import TotalBoard from "./components/TotalBoard";
+import TotalChart from "./components/TotalChart";
+import BlockTable from "./components/table/BlockTable";
+import MessageTable from "./components/table/MessageTable";
+
 export default {
   name: "Home",
   data() {
@@ -27,8 +37,11 @@ export default {
     };
   },
   components: {
-    ...components,
-    TicketChain
+    MessageTable,
+    BlockTable,
+    TotalChart,
+    TotalBoard,
+    TicketChain,
   },
   methods: {
     handleHashChange(v) {
@@ -50,65 +63,37 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home-con {
-  & ::v-deep input {
-    display: block;
-    margin: 0 auto;
-  }
-  .board-con {
-  }
-  .table-con {
-    display: flex;
-    margin-top: 30px;
-    & > div {
-      flex: 1;
+
+  .l-block-message-tables {
+    $brakpoint: 64rem; //1024px
+
+    @media (min-width: $brakpoint)  {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      height: 100%;
     }
-  }
-  .block-message-table {
-    display: flex;
-    box-sizing: border-box;
-    & > div {
-      flex: 1;
-      max-width: 50%;
-      background: var(--main-bg-color);
-    }
-    & > div:first-child {
-      margin-right: 20px;
-    }
-    & ::v-deep .el-table__body-wrapper {
-      min-height: 100%;
-    }
-  }
-  .sub-chart-con {
-    display: flex;
-    & > div {
-      flex: 1;
-      height: 400px;
-      background: var(--main-bg-color);
-    }
-    & > div:first-child {
-      margin-right: 10px;
-    }
-    margin: 40px 0;
-  }
-}
-@media (max-width: 768px) {
-  .block-message-table {
-    display: block !important;
-    & ::v-deep > div {
-      max-width: 100% !important;
-      margin-right: 0 !important;
-      margin-top: 10px;
-    }
-    & ::v-deep .el-table {
-      .cell {
-        height: 20px;
-        line-height: 20px;
-        font-size: 12px;
+
+    .panel {
+      @include panel;
+      @include fillHeight;
+      height: 25rem; // 400px
+
+      @media (min-width: $brakpoint)  {
+        flex: 1;
+        margin-right: $horizontal-space;
+        width: calc(50% - #{$horizontal-space});
+        height: calc(100% - #{$vertical-space});
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
   }
-  .board-con {
-    background: transparent !important;
+
+  .l-ticket-chain {
+    margin-bottom: $vertical-space;
   }
 }
 </style>

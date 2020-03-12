@@ -1,5 +1,5 @@
 <template>
-  <div class="mining bottom-10">
+  <div class="mining">
     <active-miner />
     <proven-power />
     <miner-list />
@@ -18,4 +18,18 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .mining {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*height: 100%;*/
+  }
+
+  /*// Not yet page-fit responsive.*/
+  /*// .mining {*/
+  /*//   @media (min-width: 48rem) {}*/
+  /*// }*/
+  ::v-deep .base-table {
+    height: 30rem !important;
+  }
+</style>

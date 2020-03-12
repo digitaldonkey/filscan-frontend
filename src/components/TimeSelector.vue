@@ -91,25 +91,24 @@ export default {
   height: 60px;
   background: var(--board-bg-color);
   border-radius: 8px;
-  padding-left: 30px;
+  padding-left: $vertical-space;
   align-items: center;
   .time-con {
     display: flex;
     margin-left: auto;
-    width: 250px;
-    height: 25px;
-    border: 1px solid #999;
+    width: auto;
+    height: 2rem;
+    /*border: 1px solid #999;*/
     align-items: center;
-    margin-right: 20px;
-    border-radius: 5px;
     span {
-      flex: 1;
-      height: 25px;
+      padding: .2rem .5rem;
       cursor: pointer;
-      line-height: 25px;
+      line-height: $horizontal-space;
       text-align: center;
-      border-radius: 5px;
+      border-radius: $panel-border-radius;
       color: var(--main-text-color);
+      border: 1px solid #999;
+      margin-left: $vertical-space;
       &.active {
         background: #0062ff;
         color: white;
@@ -122,7 +121,6 @@ export default {
     padding: 3.3vw;
     border-radius: 10px;
     .time-con {
-      margin-left: 0;
       height: 7.2vw;
       width: 66.7vw;
       margin: 0 auto;

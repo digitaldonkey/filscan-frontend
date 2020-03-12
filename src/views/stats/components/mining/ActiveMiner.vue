@@ -1,5 +1,5 @@
 <template>
-  <div class="active-miner bottom-20">
+  <div class="active-miner" v-resize:debounce="resizeChart">
     <time-selector title="Total Storage Miners" @time-select="handleTimeChange">
       <span slot="left" class="title">{{
         $t("stats.mining.activeMiner.title")
@@ -9,7 +9,7 @@
       class="line-chart"
       ref="line"
       v-loading="loading"
-      element-loading-background="var(--board-bg-color)"
+      element-loading-background="transparent"
     ></div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
     };
   },
   methods: {
+    resizeChart () {
+      chart.resize();
+    },
     handleTimeChange(v) {
       this.selector = v;
     },
@@ -153,9 +156,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .active-miner {
-  background: var(--board-bg-color);
-  border-radius: 8px;
-  box-shadow: 0px 1px 7px 9px rgba(0, 0, 0, 0.03);
+  @include panel;
+
   .line-chart {
     height: 500px;
   }

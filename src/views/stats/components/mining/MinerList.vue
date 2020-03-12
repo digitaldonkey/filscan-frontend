@@ -1,6 +1,6 @@
 <template>
   <div class="miner-list">
-    <div class="title bottom-10">{{ $t("stats.mining.minerList.title") }}</div>
+    <div class="title">{{ $t("stats.mining.minerList.title") }}</div>
     <time-selector
       @time-select="handleTimeChange"
       :activeIndex.sync="activeIndex"
@@ -235,14 +235,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .miner-list {
-  background: var(--board-bg-color);
-  .title {
-    padding-left: 30px;
-    font-weight: bold;
-    padding-top: 20px;
-    font-size: 20px;
-    color: var(--main-text-color);
+  @include panel;
+  @include fillHeight;
+  height: inherit;
+
+  .table-con {
+    @include fillHeight;
   }
+  .title {
+    @include title;
+  }
+
   & ::v-deep .el-input.search {
     width: 400px;
     input {
@@ -264,24 +267,6 @@ export default {
       border-color: transparent;
     }
   }
-  @media (max-width: 768px) {
-    & ::v-deep .el-table {
-      .cell {
-        height: 20px !important;
-        line-height: 20px !important;
-        font-size: 12px;
-      }
-      .el-table__expand-icon i {
-        font-size: 12px;
-        line-height: 20px !important;
-      }
-    }
-    & ::v-deep .el-input.search input {
-      font-size: 12px;
-      height: 20px;
-      width: 45vw;
-      border-radius: 4px;
-    }
-  }
+
 }
 </style>

@@ -6,14 +6,16 @@
       :hash="hash"
       @height-change="handleHeightChange"
       @get-blocks="getBlocks"
-      v-show="!isMobile"
     />
     <block-detail v-if="hash" :hash="hash" :block="currentBlock" />
-    <block-list
-      v-if="!hash && !isMobile"
-      :height="currentHeight"
-      :list="currentBlockList"
-    />
+
+    <div class="block-list" v-if="!hash && !isMobile">
+      <block-list
+        :height="currentHeight"
+        :list="currentBlockList"
+      />
+    </div>
+
     <div class="mb-block-list" v-if="isMobile && !hash">
       <div
         v-for="(value, key) in mbBlockList"
@@ -32,6 +34,7 @@
         ></mb-board>
       </div>
     </div>
+
   </div>
 </template>
 <script>
@@ -210,6 +213,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tipset {
+  display: flex;
+  flex-direction: column;
+  height: $content-height;
+  >div {
+    margin-bottom: $vertical-space;
+  }
   .chart-con {
     width: 100%;
     background: var(--main-bg-color);
@@ -217,6 +226,11 @@ export default {
       width: 100%;
       height: 500px;
     }
+  }
+  .block-list {
+    height: 100%;
+    //margin: $vertical-space 0;
+    //padding: 0 $horizontal-space;
   }
   @media (max-width: 768px) {
     .block-item-con {

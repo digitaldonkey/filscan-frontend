@@ -1,12 +1,14 @@
 <template>
   <div
     class="block-time-chart"
-    v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    :loading="loading"
+    element-loading-background="transparent"
+    v-resize:debounce="resizeChart"
   >
     <div class="chart-top">
-      <div class="avg top-30">
-        <div>
+
+      <div class="avg total-chart--chart-top">
+        <div class="title">
           {{ $t("home.blockTime.label") }}
           <el-popover
             placement="bottom-start"
@@ -14,14 +16,15 @@
             trigger="hover"
             :content="$t('home.blockTime.tips')"
           >
-            <i class="el-icon-warning-outline" slot="reference"></i>
+            <i class="el-icon-question" slot="reference"></i>
           </el-popover>
         </div>
-        <div v-show="!loading">{{ avgTime }} s</div>
+        <div class="value"><span v-show="!loading">{{ avgTime }} s</span></div>
       </div>
       <div class="chart-con" ref="time"></div>
     </div>
-    <div class="min-max bottom-10">
+
+    <div class="min-max">
       <div class="min">
         <span>{{ $t("home.blockTime.min") }}</span>
         <span>{{ min }} s</span>
@@ -36,6 +39,7 @@
 <script>
 import { getBlockTimeData } from "@/api/home";
 import dayjs from "dayjs";
+
 let chart;
 export default {
   name: "BlockTimeChart",
@@ -50,6 +54,9 @@ export default {
     };
   },
   methods: {
+    resizeChart () {
+      chart.resize();
+    },
     drawTimeChart() {
       const data = this.dataList;
       const {
@@ -59,6 +66,7 @@ export default {
       } = this.chartTheme.blockTime;
       const vm = this;
       const option = {
+        responsive: true,
         tooltip: {
           formatter: function(p) {
             const html = vm.$t("chart.blockTime", {
@@ -175,81 +183,81 @@ export default {
 </script>
 <style lang="scss" scoped>
 .block-time-chart {
+  $breakpont: 61.25rem;
+  $breakpoint-for-value-single-line: 71.875rem;
+  $color: var(--average-time-color);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  // Defined h/w is required to render chart.
+  width: 100%;
+  height: 100%;
+
+
   .chart-top {
-    display: flex;
-  }
-  .avg {
-    min-width: 180px;
-    div:first-child {
-      font-weight: bold;
-      height: 30px;
-      color: var(--total-board-top-color);
-      &::before {
-        content: "";
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background: #0091ff;
-        border-radius: 50%;
-        margin-right: 5px;
+    flex-grow: 1;
+    @media (min-width: $breakpont)  {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-con {
+      height: 80%;
+      /*height: inherit;*/
+      width: 100%;
+      flex: 1;
+      align-self: flex-end;
+    }
+
+    .avg {
+      width: 100%;
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+
+      @media (min-width: $breakpont)  {
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      @media (min-width: $breakpoint-for-value-single-line) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+
+      .title {
+        @include chartInfo($color, $breakpont);
+      }
+      .value {
+        @include chartValue($color, $breakpont);
       }
     }
-    div:last-child {
-      color: #0091ff;
-      font-size: 26px;
-      margin-top: 5px;
-    }
   }
-  .chart-con {
-    height: 100px;
-    flex: 1;
-  }
+
+
   .min-max {
-    margin-left: 180px;
+    height: $horizontal-space;
     display: flex;
     justify-content: space-between;
-    flex: 1;
+
     .min,
     .max {
-      font-size: 16px;
+      font-size: .875rem;
       span:first-child {
         color: var(--total-board-bottom-color);
-        margin-right: 10px;
+        margin-right: .5rem;
       }
       span:last-child {
         color: var(--main-text-color);
       }
     }
+
     .max {
       span:first-child {
         color: #ff0044;
       }
-    }
-  }
-  @media (max-width: 768px) {
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
-    .avg {
-      flex: 2;
-      div:last-child {
-        margin-top: 15px !important;
-        font-size: 12px !important;
-      }
-      & div:first-child::before {
-        width: 6px;
-        height: 6px;
-      }
-    }
-    .chart-con {
-      flex: 3;
-    }
-    .min-max {
-      padding-left: 40%;
-      margin: 0;
-    }
-    .min,
-    .max {
-      font-size: 12px !important;
     }
   }
 }

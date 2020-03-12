@@ -1,11 +1,11 @@
 <template>
   <div
-    class="total-board bottom-10"
+    class="total-board"
     v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    element-loading-background="transparent"
   >
     <div v-for="item in info" :key="item.key" class="info-item">
-      <div>
+      <div class="info-item--label">
         {{ $t(`home.board.${item.labelKey}.label`) }}
         <el-popover
           placement="bottom-start"
@@ -15,13 +15,13 @@
           v-if="!isMobile"
         >
           <i
-            class="el-icon-warning-outline"
+            class="el-icon-question"
             slot="reference"
             style="margin-left:3px"
           ></i>
         </el-popover>
       </div>
-      <div v-show="!loading">{{ `${item.value || ""} ${item.unit}` }}</div>
+      <div class="info-item--value" v-show="!loading">{{ `${item.value || ""} ${item.unit}` }}</div>
     </div>
   </div>
 </template>
@@ -102,6 +102,7 @@ export default {
         this.setHeight(info.tipset_height);
         this.increaseLoadCount();
       } catch (e) {
+        // eslint-disable-next-line
         console.log(e);
       }
     }
@@ -115,64 +116,70 @@ export default {
 .total-board {
   display: flex;
   flex-wrap: wrap;
+  @media (min-width: 980px) {
+    flex-wrap: nowrap;
+  }
+
   .info-item {
-    //width: 16.66%;
-    border-radius: 8px;
-    box-shadow: 0px 1px 7px 9px rgba(0, 0, 0, 0.03);
-    padding: 15px;
+    @include panel;
     flex: 1;
-    margin-right: 10px;
-    background: var(--board-bg-color);
-    &:nth-child(6) {
+    margin-right: $horizontal-space;
+    margin-bottom: $vertical-space;
+    min-width: 45%;
+    &:nth-child(2n + 2) {
       margin-right: 0;
     }
-    div {
-      height: 30px;
-      line-height: 30px;
-      color: #999;
+    // 3 Items per Row
+    @media (min-width: 500px) {
+      min-width: 28%;
+      &:nth-child(2n + 2) {
+        margin-right: $horizontal-space;
+      }
+      &:nth-child(3n) {
+        margin-right: 0;
+      }
+    }
+    // 6 Items per row
+    @media (min-width: 980px) {
+      min-width: 15%;
+      &:nth-child(2n + 2),
+      &:nth-child(3n) {
+        margin-right: $horizontal-space;
+      }
+      &:nth-child(6) {
+        margin-right: 0;
+      }
+    }
+
+    .info-item--label {
       text-align: center;
       color: var(--total-board-top-color);
-    }
-    div:last-child {
-      font-size: 24px;
-      color: var(--total-board-bottom-color);
-    }
-    div:first-child {
       margin-bottom: 5px;
       font-weight: bold;
+      padding-right: .75rem;
+
+      @media (min-width: 500px) {
+        font-size: .75rem;
+        white-space: pre;
+      }
+
       span {
         position: relative;
         i {
           position: absolute;
           top: 4px;
-          font-size: 12px;
+          font-size: .75rem;
         }
       }
     }
-  }
-}
-@media (max-width: 768px) {
-  .total-board {
-    .info-item {
-      flex: 1;
-      min-width: 45%;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-      margin-right: 0;
-      &:nth-child(2n + 1) {
-        margin-right: 10px;
-      }
-      div {
-        height: 20px;
-        line-height: 20px !important;
-        color: var(--total-board-bottom-color) !important;
-        font-size: 10px;
-        &:first-child {
-          color: var(--total-board-top-color) !important;
-        }
-        &:last-child {
-          font-size: 12px;
-        }
+
+    .info-item--value {
+      text-align: center;
+      color: var(--total-board-bottom-color);
+      font-size: 1.25rem;
+      line-height: 1.8rem;
+      @media (min-width: 500px) {
+        font-size: 1rem;
       }
     }
   }

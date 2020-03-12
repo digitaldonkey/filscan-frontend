@@ -6,11 +6,11 @@
       :loadMore="true"
       @load="loadMessageData"
       :showLoading="messageTable.loading"
-      :showAppend="messageTable.append && !isMobile"
-      :max-height="isMobile ? 200 : 400 * rate"
+      :showAppend="messageTable.append"
       @click-append="goTo('messageList')"
       :labels="$t('home.messageTable.label')"
       radius
+      :stripe="true"
     ></base-table>
   </div>
 </template>
@@ -29,27 +29,24 @@ export default {
             target: "message/detail",
             paramKey: "cid",
             isLink: true,
-            ellipsis: true
           },
           {
-            key: "time"
+            key: "time",
           },
           {
             key: "from",
             isLink: true,
             target: "address/detail",
             paramKey: "address",
-            ellipsis: true
           },
           {
             key: "to",
             isLink: true,
             target: "address/detail",
             paramKey: "address",
-            ellipsis: true
           },
           {
-            key: "value"
+            key: "value",
           }
         ],
         loadCount: 0,
@@ -146,8 +143,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .message-table {
-  div {
-    background: var(--main-bg-color);
-  }
+  @include fillHeight;
 }
 </style>

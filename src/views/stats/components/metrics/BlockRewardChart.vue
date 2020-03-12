@@ -2,7 +2,8 @@
   <div
     class="block-reward-chart"
     v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    element-loading-background="transparent"
+    v-resize:debounce="resizeChart"
   >
     <time-selector @time-select="handleTimeChange">
       <span slot="left" class="title">{{
@@ -31,6 +32,9 @@ export default {
     };
   },
   methods: {
+    resizeChart() {
+      chart.resize();
+    },
     drawChart() {
       const rate = this.rate;
       const numberConversion = this.numberConversion;
@@ -199,9 +203,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .block-reward-chart {
-  background: var(--board-bg-color);
-  border-radius: 8px;
-  box-shadow: 0px 1px 7px 9px rgba(0, 0, 0, 0.03);
+  @include panel;
   .title {
     font-size: 20px;
     color: var(--main-text-color);

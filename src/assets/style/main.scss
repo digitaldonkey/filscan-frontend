@@ -2,60 +2,130 @@
 
 html,
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    height: 100%;
-    background: var(--main-bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  height: 100%;
+  background: var(--main-bg-color);
+  * {
+    // Why this app was build with content-box?
+    box-sizing: border-box;
+  }
 }
 
 a {
-    text-decoration: none;
-    //color: white;
+  text-decoration: none;
 }
 
-:root .text-overflow-ellipsis > span {
-    box-sizing: border-box;
-    max-width: 6rem;
+
+// Please avoid v-deep in components.
+// Using v-deep is a component-design-anti pattern causing a lot of pain.
+
+// Global styles should be set here and ideally not in components.
+:root {
+  @import "~element-ui/packages/theme-chalk/src/index";
+
+  div {
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      width: 5px;
+
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scroll-bg-color);
+      border-radius: 5px;
+    }
+  }
+
+  .el-table {
+    font-size: $--font-size-extra-small;
+    color: red !important;
+    * {
+      line-height: initial;
+      font-size: inherit;
+      text-overflow: inherit;
+      overflow: inherit;
+    }
+    .cell {
+      line-height: inherit;
+    }
+  }
+
+  // Custom copy-and-past-enabled
+  // text overflow for e.g. address.
+  .text-overflow-ellipsis {
+    max-width: 100%;
+    width: inherit;
+    overflow: hidden;
     word-wrap: normal;
     white-space: pre;
-    overflow: hidden;
     text-overflow: ellipsis;
     padding-left: 0.25rem;
     padding-right: .25rem;
+  }
+
+  .el-menu--horizontal .el-menu {
+    border: solid 1px #E4E7ED;
+
+    .el-menu-item {
+      line-height: 1.875rem;
+      height: 1.875rem;
+      padding-left: .5 * $vertical-space;
+      padding-right: .5 * $vertical-space;
+      //font-weight: bold;
+      color: var(--link-color) !important;
+
+      .is-active {
+        color: var(--main-text-color) !important;
+      }
+      &:hover {
+        color: #0A0D13 !important;
+        background: rgba(255, 255, 255, .9) !important;
+      }
+    }
+  }
+  .el-select-dropdown__wrap {
+    max-height: 100%;
+  }
+  .el-select-dropdown {
+    background: var(--board-bg-color) !important;
+
+    .el-select-dropdown__item {
+      color: var(--link-color) !important;
+      line-height: 1.875rem;
+      height: 1.875rem;
+      padding-left: .5 * $vertical-space;
+      padding-right: .5 * $vertical-space;
+
+      &.selected {
+        color: var(--main-text-color) !important;
+      }
+      .hover,
+      &:hover,
+      &.selected.hover {
+        color: #0A0D13 !important;
+        background: $--background-color-base !important;
+      }
+
+    }
+  }
+  .el-select{
+    .el-input {
+      input {
+        background: var(--board-bg-color)!important;
+        color: var(--main-text-color)!important;
+      }
+    }
+  }
+
+  .el-popover {
+    text-align: left;
+    word-break: keep-all;
+  }
 }
-
-:root{
-    // @see ~/packages/theme-chalk/src/common/var.scss
-    $--color-primary: #0062ff;
-
-    $--font-size-extra-large: 1.4rem;
-    $--font-size-large: 1.25rem;
-    $--font-size-medium: 1.125rem;
-    $--font-size-base: 1rem;
-    $--font-size-small: .8125rem;
-    $--font-size-extra-small: .75rem;
-
-    $--font-path: '~element-ui/lib/theme-chalk/fonts';
-    @import "~element-ui/packages/theme-chalk/src/index";
-    div {
-        &::-webkit-scrollbar {
-            width: 10px;
-        }
-        &::-webkit-scrollbar-track {
-            width: 5px;
-        }
-        &::-webkit-scrollbar-thumb {
-            background: var(--scroll-bg-color);
-            border-radius: 5px;
-        }
-    }
-    .el-table {
-        font-size: $--font-size-extra-small;
-    }
-    .el-link {
-        font-size: inherit;
-    }
-}
-
 
 //:root .el-table .el-table__row  {
 //    background-color: var(--table-row-bg-color);
@@ -67,115 +137,58 @@ a {
 //    background-color: var(--table-row-hover-bg-color);
 //}
 
-:root .el-table .el-table__header,
-:root .el-table .el-table__body,
-:root .el-table .el-table__footer {
-    //table-layout: auto;
-    //border-collapse: collapse;
+:root[theme='dark'] {
+  $--color-primary: var(--logo-text-color);
+  $--link-color: var(--logo-text-color);
 }
 
-
-:root[theme='dark']{
-    $--color-primary: var(--logo-text-color);
-    $--link-color: var(--logo-text-color);
-}
-
-//  el-* Styles??
 .el-menu--horizontal ul {
-    background: var(--board-bg-color)!important;
-    li{
-        background: var(--board-bg-color)!important;
-        &:hover,&.is-active{
-            color: var(--main-text-color)!important;
-        }
+  background: var(--board-bg-color) !important;
+  li {
+    background: var(--board-bg-color) !important;
+    &:hover, &.is-active {
+      color: var(--main-text-color) !important;
     }
+  }
 }
 
 .block-title {
-    color: var(--total-board-top-color);
-    line-height: 1.5;
+  color: var(--total-board-top-color);
+  line-height: 1.5;
 }
 
-//.el-select{
-//    .el-input input{
-//        background: var(--board-bg-color)!important;
-//        color: var(--main-text-color)!important;
-//    }
+// Still in place but discouraged to use.
+// Use $--font-size-*
+//[class^="font-"] {
+//  outline: 2px solid yellow;
 //}
-
-.el-select-dropdown{
-    background: var(--board-bg-color)!important;
-    li{
-        color: var(--main-text-color)!important;
-        &:hover,&.selected{
-            color: var(--link-color)!important;
-        }
-    }
-}
-
-.el-popover{
-    word-break: break-word
-}
-
-
-[class^="font-"] {
-    outline: 2px solid yellow;
-}
-
 .font-22 {
-    font-size: 1.375rem;
+  font-size: 1.375rem;
 }
-.font-20{
-    font-size: 1.25rem;
+.font-20 {
+  font-size: 1.25rem;
 }
-.font-18{
-    font-size: 1.125rem;
+.font-18 {
+  font-size: 1.125rem;
 }
-.font-16{
-    font-size: 1rem;
+.font-16 {
+  font-size: 1rem;
 }
-.font-14{
-    font-size: .9375rem;
+.font-14 {
+  font-size: .9375rem;
 }
 .font-12 {
-    font-size: .75rem;
+  font-size: .75rem;
 }
 
-[class^="top-"] {
-    outline: 1px dashed deeppink;
-}
+// Removed.
+// Pleas use $vertical-space and $horizontal-space
+// for consistency.
+//[class^="top-"],
+//[class^="bottom-"]{
+//  outline: 1px dashed deeppink;
+//}
 
-.top-40 {
-    margin-top: 2.5rem;
-}
-.top-30 {
-    margin-top: 1.875rem;
-}
-.top-20 {
-    margin-top: 1.25rem;
-}
-.top-10 {
-    margin-top: .625rem;
-}
-
-[class^="bottom-"] {
-    outline: 1px dashed yellowgreen;
-}
-
-.bottom-40 {
-    margin-bottom: 2.5rem;
-}
-.bottom-30 {
-    margin-bottom: 1.875rem;
-}
-.bottom-20 {
-    margin-bottom: 1.25rem;
-}
-.bottom-10 {
-    margin-bottom: .625rem;
-}
-
-
-.border-bottom{
-    border-bottom: 1px solid var(--border-bottom-color);
+.border-bottom {
+  border-bottom: 1px solid var(--border-bottom-color);
 }

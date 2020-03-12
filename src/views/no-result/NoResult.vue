@@ -69,7 +69,6 @@ export default {
       padding: 0 5vw;
       width: 100%;
       text-align: center;
-      box-sizing: border-box;
     }
     img {
       order: 1;

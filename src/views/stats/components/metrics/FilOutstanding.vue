@@ -1,8 +1,9 @@
 <template>
   <div
-    class="fil-outstanding bottom-20"
+    class="fil-outstanding"
     v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    element-loading-background="transparent"
+    v-resize:debounce="resizeChart"
   >
     <div class="chart-con" ref="chart"></div>
     <div class="data-con">
@@ -36,6 +37,9 @@ export default {
     this.getFilOutstanding();
   },
   methods: {
+    resizeChart() {
+      chart.resize();
+    },
     drawChart() {
       const rate = this.rate;
       const numberConversion = this.numberConversion;
@@ -59,18 +63,18 @@ export default {
             { name: pledge, icon: "circle" }
           ],
           selectedMode: false,
-          left: 30 * rate,
-          top: 20 * rate,
+          // left: 30 * rate,
+          // top: 20 * rate,
           textStyle: {
-            fontSize: 12 * rate,
+            fontSize: '.75rem',
             color
           }
         },
-        grid: {
-          left: 50 * rate,
-          top: 100 * rate,
-          right: 40 * rate
-        },
+        // grid: {
+        //   left: 50 * rate,
+        //   top: 100 * rate,
+        //   right: 40 * rate
+        // },
         xAxis: {
           type: "category",
           data: xData,
@@ -190,11 +194,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .fil-outstanding {
+  @include panel;
+
   height: 400px;
   display: flex;
-  background: var(--board-bg-color);
-  border-radius: 8px;
-  box-shadow: 0px 1px 7px 9px rgba(0, 0, 0, 0.03);
+
   .chart-con {
     height: 100%;
     flex: 1;

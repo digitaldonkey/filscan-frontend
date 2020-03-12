@@ -10,10 +10,9 @@
       @click-append="goTo('tipset')"
       :span-map="blockTable.heightMap"
       :span="blockTable.span"
-      :max-height="isMobile ? 200 : 400 * rate"
       :labels="$t('home.blockTable.label')"
       radius
-      :stripe="false"
+      :stripe="true"
     ></base-table>
   </div>
 </template>
@@ -31,26 +30,26 @@ export default {
           {
             key: "height",
             isLink: true,
-            target: "tipset"
+            target: "tipset",
           },
           {
             key: "hash",
             isLink: true,
             target: "tipset",
-            ellipsis: true
+            ellipsis: true,
           },
           {
-            key: "time"
+            key: "time",
           },
           {
             key: "miner",
             isLink: true,
             target: "address/detail",
-            paramKey: "address"
+            paramKey: "address",
           },
           {
             key: "reward",
-            unit: "FIL"
+            unit: "FIL",
           }
         ],
         loadCount: 0,
@@ -75,7 +74,8 @@ export default {
                 span: 1,
                 index: index
               };
-            } //表头合并
+            }
+            // Header merge
             return {
               ...item,
               time: this.formatTime(item.originTime, item.current),
@@ -107,7 +107,7 @@ export default {
               span: 1,
               index
             };
-          } //表头合并
+          } // Header merge.
           const current = new Date().getTime();
           const realTime =
             timestamp > current / 1000 ? current / 1000 : timestamp;
@@ -122,6 +122,7 @@ export default {
           };
         });
         this.blockTable.dataSource = dataSource;
+
         Object.values(heightMap).forEach(item => {
           this.blockTable.heightMap[item.index] = item.span;
         });
@@ -139,7 +140,8 @@ export default {
       if (this.blockTable.loadCount == 3) {
         this.blockTable.append = true;
         return;
-      } else {
+      }
+      else {
         clearInterval(this.blockTable.timer);
         try {
           this.blockTable.loading = true;
@@ -172,26 +174,29 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.block-miner-table {
-  display: flex;
-  & > div {
-    flex: 1;
-    max-width: 50%;
-    background: var(--main-bg-color);
-  }
-  & > div:first-child {
-    margin-right: 10px;
-  }
-  .table-title {
-    padding: 15px;
-    background: var(--main-bg-color);
-    border-bottom: 1px solid #ccc;
+  .block-table {
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
-    img {
-      width: 20px;
-      margin-right: 15px;
+    flex-direction: column;
+
+    /*& > div {*/
+    /*  flex: 1;*/
+    /*  max-width: 50%;*/
+    /*  background: var(--main-bg-color);*/
+    /*}*/
+    /*& > div:first-child {*/
+    /*  margin-right: 10px;*/
+    /*}*/
+    .table-title {
+      padding: 15px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      img {
+        width: 20px;
+        margin-right: 15px;
+      }
     }
   }
-}
 </style>

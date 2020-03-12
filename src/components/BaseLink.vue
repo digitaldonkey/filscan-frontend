@@ -36,9 +36,4 @@ export default {
 .el-link.underline {
   text-decoration: underline;
 }
-@media (max-width: 768px) {
-  .el-link {
-    font-size: 12px;
-  }
-}
 </style>

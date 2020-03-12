@@ -1,5 +1,5 @@
 <template>
-  <div class="block-list bottom-10 top-20">
+  <div class="block-list">
     <base-table
       :dataSource="list"
       :columns="columns"
@@ -97,7 +97,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .block-list {
-  background: var(--board-bg-color);
+  @include panel;
+
   & ::v-deep .list-title {
     height: 40px;
     color: var(--main-text-color);

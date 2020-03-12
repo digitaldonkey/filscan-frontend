@@ -7,6 +7,7 @@
     --total-board-top-color:black;
     --total-board-bottom-color:#0B4977;
 
+    --average-time-color:#0091ff;
     --block-size-color:#6A0CE0;
     --total-power-color:#F7B500;
 
@@ -22,7 +23,7 @@
     --overview-bg-dark-color:#F5F7FA;
 
     --general-title-bg-color:white;
-    --general-title-text-color:black;
+    --general-title-text-color:#333;
 
     --message-list-method-bg-color:white;
     --message-list-method-text-color:black;
@@ -30,10 +31,10 @@
     --overview-text-color:black;
     --link-color:#0062ff;
     --white:#fff;
-    --table-header-bg-color:white;
+    --table-header-bg-color:transparent;
     --table-header-border-color:#EBEEF5;
     --table-header-text-color:black;
-    --table-row-bg-color:white;
+    --table-row-bg-color:transparent;
     --table-row-hover-bg-color:#85CBFF;
     --table-row-hover-text-color:white;
     --table-row-striped-bg-color:#F5F7FA;
@@ -48,6 +49,7 @@
     --total-board-top-color:#999;
     --total-board-bottom-color:#FFF;
 
+    --average-time-color:#0091ff;
     --block-size-color:#F7B500;
     --total-power-color:#F93C53;
 
@@ -60,16 +62,16 @@
     --overview-bg-color:#121A23;
     --overview-bg-dark-color:#0B0E13;
     --general-title-bg-color:white;
-    --general-title-text-color:black;
+    --general-title-text-color:#999;
     --message-list-method-bg-color:white;
     --message-list-method-text-color:black;
     --overview-text-color:white;
     --link-color:#32C5FF;
     --white:#fff;
-    --table-header-bg-color:#151E42;
+    --table-header-bg-color:transparent;
     --table-header-border-color:#151E42;
     --table-header-text-color:white;
-    --table-row-bg-color:#121A26;
+    --table-row-bg-color:transparent;
     --table-row-hover-bg-color:#96ABFF;
     --table-row-hover-text-color:white;
     --table-row-striped-bg-color:#10151F;

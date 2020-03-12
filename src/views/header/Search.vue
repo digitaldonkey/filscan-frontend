@@ -121,16 +121,16 @@ export default {
     }
     &.dark ::v-deep input:nth-child(2) {
       background: var(--main-bg-color) !important;
-      border-color: transparent;
+      border-color: var(--main-bg-color);
     }
     &.dark ::v-deep .el-input-group__prepend{
       background: var(--main-bg-color)!important;
-      border-color: transparent;
+      border-color: var(--main-bg-color);
       border-right: 1px solid var(--board-bg-color)
     }
     &.dark ::v-deep .el-input-group__append {
       background: var(--main-bg-color)!important;
-      border-color: transparent;
+      border-color: var(--main-bg-color);
       border-left: 1px solid var(--board-bg-color)
     }
   }
@@ -145,34 +145,30 @@ export default {
     background: var(--board-bg-color) !important;
     color: var(--main-text-color) !important;
   }
-  & ::v-deep .el-button {
-    width: 70px;
-  }
+
   @media (max-width: 768px) {
+    display: flex;
     & ::v-deep input {
       height: 30px !important;
       border-radius: 15px !important;
     }
-    & ::v-deep .el-select {
-      width: 100px;
-    }
-    & ::v-deep .el-input__suffix {
-      i {
-        line-height: 20px;
-        padding-left: 5px;
-        &.is-reverse {
-          padding-right: 10px;
-        }
-      }
-    }
-    & ::v-deep button {
-      width: 50px !important;
-    }
-    .mb-button .el-button {
+    .el-input {
+      flex-grow: 1;
+      font-size: 1rem;
+      width: auto;
       height: 30px;
       border-radius: 15px;
-      width: 100% !important;
-      margin-top: 20px;
+      margin-right: $horizontal-space;
+    }
+
+    .mb-button  {
+      display: inline-block;
+      .el-button {
+        height: 30px;
+        border-radius: 15px;
+        font-size: 1rem;
+        padding: 0 $horizontal-space;
+      }
     }
   }
 }

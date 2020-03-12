@@ -1,10 +1,11 @@
 <template>
-  <div class="node-map bottom-10">
+  <div class="node-map" v-resize:debounce="resizeChart"
+  >
     <div
       ref="chart"
       class="chart-con"
       v-loading="loading"
-      element-loading-background="var(--board-bg-color)"
+      element-loading-background="transparent"
     ></div>
   </div>
 </template>
@@ -21,6 +22,9 @@ export default {
     };
   },
   methods: {
+    resizeChart() {
+      chart.resize();
+    },
     drawNodeMap(zoom) {
       const data = this.points;
       const { bg, scatter, geo, tooltip } = this.chartTheme.map;
@@ -81,7 +85,7 @@ export default {
           layoutSize: "180%",
           scaleLimit: {
             min: 1,
-            max: 150
+            max: 100
           },
           itemStyle: {
             normal: {
@@ -158,11 +162,20 @@ export default {
 </script>
 <style lang="scss" scoped>
 .node-map {
-  height: calc(100vh - 200px);
+  @include panel;
+  display: flex;
+  $map-height: 100vh;
+  // With Panel height would be
+  height: calc(#{$map-height}  - #{$header-height} - #{$footer-height} - #{ 2* $vertical-space});
+
+  // Wihout panel.
+  // height: calc(100vh - #{$header-height} - #{$footer-height});
+
   position: relative;
   .chart-con {
     width: 100%;
     height: 100%;
+
     background: var(--board-bg-color);
   }
   @media (max-width: 768px) {

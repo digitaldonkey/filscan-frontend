@@ -1,23 +1,23 @@
 <template>
   <div
     class="block-size-chart"
-    v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    :loading="loading"
+    element-loading-background="transparent"
+    v-resize:debounce="resizeChart"
   >
     <div class="size-info-con">
-      <div class="top-30">
-        {{ $t("home.blockSize.label") }}
+      <div class="title">
+        {{ $t("home.blockSize.label") }}&nbsp;
         <el-popover
           placement="bottom-start"
           width="200"
           trigger="hover"
           :content="$t('home.blockSize.tips')"
-        >
-          <i class="el-icon-warning-outline" slot="reference"></i>
+        ><i class="el-icon-question" slot="reference"></i>
         </el-popover>
       </div>
-      <div v-show="!loading">
-        {{ $t("home.blockSize.size", { avg: avgSize }) }}
+      <div class="value" >
+        <span v-show="!loading">{{ $t("home.blockSize.size", { avg: avgSize }) }}</span>
       </div>
     </div>
     <div class="chart-con" ref="size"></div>
@@ -37,6 +37,9 @@ export default {
     };
   },
   methods: {
+    resizeChart () {
+      chart.resize();
+    },
     drawSizeChart() {
       const data = this.dataList;
       const {
@@ -158,49 +161,45 @@ export default {
 </script>
 <style lang="scss" scoped>
 .block-size-chart {
+  $breakpont: 61.25rem;
+  $color: var(--block-size-color);
+
+  // Defined h/w is required to render chart.
+  width: 100%;
+  height: 100%;
+
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (min-width:   $breakpont) {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
   .size-info-con {
-    min-width: 200px;
-    div:last-child {
-      font-size: 26px;
-      color: var(--block-size-color);
-      margin-top: 5px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .title {
+      @include chartInfo($color, $breakpont);
     }
-    div:first-child {
-      font-weight: bold;
-      height: 30px;
-      color: var(--total-board-top-color);
-      &::before {
-        content: "";
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background: var(--block-size-color);
-        border-radius: 50%;
-        margin-right: 5px;
-      }
+
+    .value {
+      @include chartValue($color, $breakpont);
+      white-space: pre;
     }
   }
+
   .chart-con {
     flex: 1;
-    height: 100%;
-  }
-  @media (max-width: 768px) {
-    .size-info-con {
-      flex: 2;
-    }
-    .size-info-con > div:last-child {
-      margin-top: 25px !important;
-      font-size: 12px !important;
-    }
-    .size-info-con > div:first-child::before {
-      width: 6px;
-      height: 6px;
-    }
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
-    .chart-con {
-      flex: 3;
+    align-self: flex-end;
+    height: 6rem;
+    width: 100%;
+    @media (min-width:   $breakpont)  {
+      margin-top: $vertical-space;
     }
   }
 }

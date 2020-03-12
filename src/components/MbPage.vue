@@ -41,27 +41,37 @@ export default {
 @mixin share-style($height) {
   height: $height !important;
   line-height: $height !important;
-  font-size: 12px !important;
-  background: var(--board-bg-color) !important;
+  font-size: $--font-size-small !important;
+  background: transparent !important;
   color: var(--main-text-color) !important;
 }
-@media (max-width: 768px) {
-  .mb-page {
-    text-align: center;
-    background: var(--board-bg-color);
-    & ::v-deep .el-pagination__jump,
-    & ::v-deep button,
-    & ::v-deep .el-pager li {
-      @include share-style(30px);
-      min-width: 20px !important;
-    }
-    & ::v-deep button i {
-      font-size: 12px !important;
-    }
-    & ::v-deep input {
-      @include share-style(20px);
-      min-width: 30px !important;
-    }
+
+.mb-page {
+  text-align: center;
+  background: var(--board-bg-color);
+  & ::v-deep .el-pagination__jump,
+  & ::v-deep button,
+  & ::v-deep .el-pager li,
+  & ::v-deep .el-pagination button {
+    @include share-style(3rem);
+    min-width: $vertical-space !important;
+  }
+  & ::v-deep button i {
+    font-size: $--font-size-base !important;
+  }
+  & ::v-deep input {
+    @include share-style(3rem);
+    min-width: 30px !important;
+    vertical-align: center;
+  }
+  & ::v-deep .el-input__inner {
+    @include share-style(3rem);
+    max-height: 1.875rem;
+    min-width: 2 * $vertical-space !important;
+  }
+  & ::v-deep .el-pagination__jump {
+    vertical-align: middle;
   }
 }
+
 </style>

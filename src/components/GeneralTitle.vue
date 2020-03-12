@@ -1,7 +1,7 @@
 <template>
   <div class="general-title border-bottom">
-    <span class="title">{{ title }}</span>
-    <span class="detail">{{ detail }}</span>
+    <h1 class="title">{{ title }}</h1>
+    <p class="detail" v-if="detail">{{ detail }}</p>
   </div>
 </template>
 <script>
@@ -19,15 +19,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .general-title {
-  height: 60px;
-  line-height: 60px;
-  border-radius: 5px;
-  background: var(--general-title-bg-color);
+  padding: $vertical-space 0;
   .title {
-    margin-left: 90px;
+    @include title;
   }
   .detail {
-    color: var(--general-title-text-color);
+    color: var(--total-board-top-color);
+    line-height: initial;
+    font-size: $--font-size-base;
+    padding-top: $vertical-space /2;
   }
 }
 </style>

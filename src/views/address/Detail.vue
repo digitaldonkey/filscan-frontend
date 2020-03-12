@@ -1,11 +1,10 @@
 <template>
-  <div class="address-detail bottom-10">
+  <div class="address-detail">
     <overview
       :dataList="dataList"
       :dataLabel="$t('address.detail.overview')"
-      class="bottom-20"
     />
-    <div class="worker-list bottom-20" v-if="workers.length">
+    <div class="worker-list" v-if="workers.length">
       <span>{{ $t("address.detail.worker") }}</span>
       <span>
         <base-link
@@ -23,21 +22,24 @@
     <overview
       :dataList="accountList"
       :dataLabel="$t('address.detail.ownerOverview')"
-      class="bottom-20"
       v-if="isMiner"
     />
-    <el-radio-group
-      v-model="showMessage"
-      style="margin-bottom: 20px;"
-      v-if="isMiner || workers.length"
-    >
-      <el-radio-button :label="true">
-        {{ $t("address.radio")[0] }}
-      </el-radio-button>
-      <el-radio-button :label="false">
-        {{ $t("address.radio")[1] }}
-      </el-radio-button>
-    </el-radio-group>
+    <div class="radio-group-wrap">
+      <div>
+        <el-radio-group
+          v-model="showMessage"
+          v-if="isMiner || workers.length"
+        >
+          <el-radio-button :label="true">
+            {{ $t("address.radio")[0] }}
+          </el-radio-button>
+          <el-radio-button :label="false">
+            {{ $t("address.radio")[1] }}
+          </el-radio-button>
+        </el-radio-group>
+      </div>
+    </div>
+
     <message-list
       v-if="showMessage"
       :address="$route.query.address"
@@ -174,6 +176,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .address-detail {
+  @include fillHeight;
+
   & ::v-deep .el-radio-group label {
     display: inline-block;
     width: 150px;
@@ -181,65 +185,43 @@ export default {
       width: 100%;
     }
   }
-  .worker-list {
-    min-height: 60px;
-    display: flex;
-    background: var(--board-bg-color);
-    box-shadow: 0px 1px 5px 7px rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
-    color: var(--main-text-color);
-    span {
-      line-height: 60px;
-    }
-    span:first-child {
-      padding-left: 100px;
-      min-width: 200px;
-    }
-    span:last-child {
-      flex: 1;
-      word-break: break-all;
-    }
-    & ::v-deep a span {
-      margin-right: 10px;
+  ::v-deep .table-con,
+  .block-list {
+    @include fillHeight;
+  }
+
+  @media (min-width: 48rem) {
+    .radio-group-wrap {
+      position: relative;
+      >div {
+        padding-top: $vertical-space;
+        position: absolute;
+        width: 100%;
+        .el-radio-group {
+          margin: 0 auto;
+          max-width: 30%;
+        }
+      }
     }
   }
-  @media (max-width: 768px) {
-    .worker-list {
-      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.03);
-      border-radius: 4px;
-      margin: 10px 0;
+
+  ::v-deep .el-radio-group {
+    display: flex !important;
+    border-radius: 4px !important;
+
+    label {
+      flex: 1;
+      /*height: 30px !important;*/
+      &:first-child span {
+        border-radius: 4px 0 0 4px;
+      }
+      &:last-child span {
+        border-radius: 0 4px 4px 0;
+      }
       span {
-        height: 30px;
-        line-height: 30px;
-        &:first-child {
-          margin-right: 10px;
-        }
-        a {
-          margin-right: 5px;
-        }
+        line-height: 1.6;
+        padding: 0;
       }
-    }
-    & ::v-deep .el-radio-group {
-      display: flex !important;
-      border-radius: 4px !important;
-      label {
-        flex: 1;
-        height: 30px !important;
-        &:first-child span {
-          border-radius: 4px 0 0 4px;
-        }
-        &:last-child span {
-          border-radius: 0 4px 4px 0;
-        }
-        span {
-          height: 100% !important;
-          line-height: 30px !important;
-          padding: 0;
-        }
-      }
-    }
-    & ::v-deep > div:nth-child(2).general-overview {
-      margin: 10px 0 !important;
     }
   }
 }

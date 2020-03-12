@@ -149,12 +149,15 @@ const en = {
       power: "Total Power",
       capacity: "Storage Capacity"
     },
+    baseTable: {
+      more: "Show all"
+    },
     blockTable: {
-      title: "Block",
+      title: "Recent Blocks",
       label: ["Height", "Hash", "Blocktime", "Miner", "Reward"]
     },
     messageTable: {
-      title: "Message",
+      title: "Recent Messages",
       label: ["Message ID", "Time", "From", "To", "Value"]
     },
     board: {
@@ -303,6 +306,7 @@ const en = {
     }
   },
   tipset: {
+    label: "Latest blocks",
     height: "Height",
     block: {
       overview: [

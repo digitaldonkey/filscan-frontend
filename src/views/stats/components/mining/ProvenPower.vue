@@ -1,5 +1,5 @@
 <template>
-  <div class="proven-power bottom-20">
+  <div class="proven-power" v-resize:debounce="resizeChart">
     <time-selector @time-select="handleTimeChange">
       <span slot="left" class="title">
         {{ $t("stats.mining.provenPower.title") }}
@@ -8,12 +8,15 @@
     <div
       class="chart-con"
       v-loading="loading"
-      element-loading-background="var(--board-bg-color)"
+      element-loading-background="transparent"
     >
       <div class="line-chart-con">
         <div class="line-chart" ref="line"></div>
       </div>
-      <div class="pie-chart" ref="pie"></div>
+      <div class="pie-chart-con">
+        <div class="pie-chart" ref="pie"></div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -38,6 +41,7 @@ export default {
   mounted() {
     lineChart = this.$chart.init(this.$refs.line);
     pieChart = this.$chart.init(this.$refs.pie);
+
     lineChart.on("updateAxisPointer", e => {
       if (e.axesInfo.length) {
         const v = this.series.map(item => {
@@ -56,6 +60,10 @@ export default {
     });
   },
   methods: {
+    resizeChart() {
+      lineChart.resize();
+      pieChart.resize();
+    },
     handleTimeChange(v) {
       this.selector = v;
     },
@@ -112,13 +120,9 @@ export default {
             formatter(v) {
               return unitConversion(v, 2);
             },
-            fontSize: 12 * rate,
+            fontSize: '1rem',
             color
           }
-        },
-        grid: {
-          left: 80 * rate,
-          right: 20
         },
         legend: {
           selectedMode: false,
@@ -169,10 +173,6 @@ export default {
                 shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             },
-            grid: {
-              right: 20,
-              left: 20
-            }
           }
         ]
       };
@@ -244,49 +244,50 @@ export default {
 </script>
 <style lang="scss" scoped>
 .proven-power {
-  background: var(--board-bg-color);
-  border-radius: 8px;
+  @include panel;
+
+
   .title {
     font-weight: bold;
     font-size: 20px;
     color: var(--main-text-color);
   }
+
   .chart-con {
-    display: flex;
-  }
-  .line-chart-con {
-    width: 70%;
-    height: 600px;
-    .line-chart {
-      width: 100%;
-      height: 100%;
-    }
-    .chart-title {
+    .pie-chart-con,
+    .line-chart-con {
+      height: 18.75rem; // Mobile 300px,
       display: flex;
-      height: 60px;
-      span {
-        line-height: 60px;
-        margin-right: auto;
+      width: 100%;
+
+      &.line-chart-con {
+        margin-bottom: $vertical-space;
+      }
+
+      .pie-chart,
+      .line-chart {
+        position: relative;
+        height: inherit;
+        width: 100%;
       }
     }
-  }
-  .pie-chart {
-    width: 30%;
-    margin-left: 20px;
-    height: 600px;
-  }
-  @media (max-width: 768px) {
-    .chart-con {
-      display: block;
+    .line-chart-con {
+      margin-bottom: $vertical-space;
+    }
+
+    @media (min-width: 768px)  {
+      display: flex;
+      flex-direction: row;
+      .pie-chart-con,
       .line-chart-con {
-        width: 100%;
-        height: auto;
-        .line-chart {
-          height: 200px;
-        }
+        height: 30.5rem;
+        width: inherit;
       }
-      .pie-chart {
-        width: 100%;
+      .line-chart-con {
+        width: 60%;
+      }
+      .pie-chart-con {
+        width: 40%;
       }
     }
   }

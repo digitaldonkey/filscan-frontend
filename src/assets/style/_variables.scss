@@ -3,11 +3,34 @@
 // It MUST NOT produce any css - only variables or mixings here.
 
 
-
+// Layout vars
 $vertical-space: 1rem;
 $horizontal-space: 1rem;
 
 $header-height: 4.375rem; // 70px
-$footer-height: 1.875rem; // 30px
+$footer-height: 3rem; // 30px
+$content-height: calc(100% - #{$header-height + $footer-height });
 
+// Panel panes.
 $panel-border-radius: .4rem;
+
+// For "$--" vars
+// see ~/packages/theme-chalk/src/common/var.scss
+$--color-primary: #0062ff;
+
+
+// Avoid PX font sizes. They mess up things and "disable" user page zoom.
+// Why PX sizes are converted to vw unit?
+
+// Every width value (incl media queries) SHOULD be in rem
+// to scale layout with base font size
+// Calc 16px = 1rem in browser zoom "0".
+
+$--font-size-extra-large: 1.4rem;
+$--font-size-large: 1.25rem;
+$--font-size-medium: 1.125rem;
+$--font-size-base: 1rem;
+$--font-size-small: .8125rem;
+$--font-size-extra-small: .75rem;
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';

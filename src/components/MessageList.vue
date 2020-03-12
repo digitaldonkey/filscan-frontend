@@ -2,7 +2,7 @@
   <div
     class="message-list"
     v-loading="loading"
-    element-loading-background="var(--board-bg-color)"
+    element-loading-background="transparent"
   >
     <div class="total-number border-bottom" slot="header">
       <span
@@ -22,6 +22,7 @@
         ></el-option>
       </el-select>
     </div>
+
     <div class="table-con" v-if="!isMobile">
       <base-table
         :dataSource="messageData"
@@ -34,13 +35,16 @@
         :currentPage="currentPage"
       ></base-table>
     </div>
-    <mb-board
-      v-for="(item, index) in messageData"
-      :key="item.cid + index"
-      :dataSource="item"
-      :columns="mbColumns"
-      v-else
-    />
+
+    <div class="mb-board-con" v-if="isMobile">
+      <mb-board
+        v-for="(item, index) in messageData"
+        :key="item.cid + index"
+        :dataSource="item"
+        :columns="mbColumns"
+      />
+    </div>
+
     <mb-page v-if="isMobile" @page-change="handlePageChange" :total="total" />
   </div>
 </template>
@@ -289,18 +293,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 .message-list {
+  @include fillHeight;
+
+  @media (min-width: 48rem) {
+    height: 100%;
+  }
+
+  .table-con {
+    @include fillHeight;
+  }
+
   .total-number {
-    height: 80px;
     align-items: center;
-    padding: 0 100px;
     display: flex;
     background: var(--board-bg-color);
     color: var(--main-text-color);
+    padding-bottom: $vertical-space;
     & ::v-deep > span {
       margin-right: auto;
       i {
         color: var(--link-color);
-        font-size: 22px;
+        font-size: $--font-size-base;
       }
     }
     .el-dropdown-link {
@@ -309,8 +322,7 @@ export default {
   }
   @media (max-width: 768px) {
     .total-number {
-      height: 30px;
-      margin-bottom: 10px;
+      margin: $vertical-space 0;
       & ::v-deep .el-select input {
         height: 20px;
         font-size: 12px !important;
@@ -330,17 +342,31 @@ export default {
 }
 </style>
 <style lang="scss">
-@media (max-width: 768px) {
-  .el-select-dropdown {
-    z-index: 10000 !important;
-    .el-select-dropdown__wrap {
-      max-height: 160px !important;
+  .message-list {
+    @include panel;
+
+    padding-bottom: 0;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    .mb-board-con {
+      @include fillHeight;
     }
-    li {
-      height: 20px !important;
-      line-height: 20px !important;
-      font-size: 12px;
+
+    @media (max-width: 768px) {
+      .el-select-dropdown {
+        z-index: 10000 !important;
+        .el-select-dropdown__wrap {
+          max-height: 160px !important;
+        }
+        li {
+          height: 1.25rem !important;
+          line-height: 1.25rem !important;
+          font-size: .75rem;
+        }
+      }
     }
   }
-}
+
 </style>

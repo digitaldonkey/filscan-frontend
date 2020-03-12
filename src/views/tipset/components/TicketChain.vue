@@ -1,16 +1,23 @@
 <template>
   <div class="ticket-chain">
-    <div class="chart-con">
-      <div
-        class="chart"
-        ref="chart"
-        v-loading="loading"
-        element-loading-background="var(--board-bg-color)"
-      ></div>
+    <div :class="`chart-con  ${ layoutClass }`">
+      <GeneralTitle :title="$t('tipset.label')" detail=""/>
+      <div class="chart-scroll-wrap">
+        <div
+          class="chart"
+          ref="chart"
+          v-loading="loading"
+          element-loading-background="transparent"
+        ></div>
+      </div>
       <div class="block-type" :style="typeStyle">
-        <div class="arrow left" @click="goLeft" v-if="!atIndex">
-          <span class="el-icon-arrow-left"></span>
-        </div>
+        <span class="arrow left" @click="goLeft" v-if="!atIndex && !isMobile">
+          <span class="el-icon-arrow-left"></span>Previous Block
+        </span>
+        <span @click="goRight" class="arrow right" v-if="!atIndex && !isMobile">
+          <!-- <img src="@/assets/image/icons/right.png" alt /> -->
+          Next Block<span class="el-icon-arrow-right"></span>
+        </span>
         <div class="type-list">
           <span>
             <i class="null"></i>
@@ -24,10 +31,6 @@
             <i class="normal"></i>
             {{ $t("tipset.blockType")[2] }}
           </span>
-        </div>
-        <div @click="goRight" class="arrow right" v-if="!atIndex">
-          <!-- <img src="@/assets/image/icons/right.png" alt /> -->
-          <span class="el-icon-arrow-right"></span>
         </div>
       </div>
     </div>
@@ -44,18 +47,20 @@ import Normal from "@/assets/image/block/normal.png";
 import Active from "@/assets/image/block/active.png";
 import NormalDark from "@/assets/image/block/normal-dark.png";
 import NullDark from "@/assets/image/block/null-dark.png";
+import GeneralTitle from "../../../components/GeneralTitle";
 let chart;
 export default {
   name: "TipsetChain",
+  components: {
+    GeneralTitle
+  },
   data() {
     return {
       tipsets: [],
       startHeight: 0,
       hashList: [],
       loading: false,
-      typeStyle: {
-        marginTop: "-160px"
-      },
+      typeStyle: {},
       jumpSafeHeight: 0
     };
   },
@@ -70,6 +75,9 @@ export default {
     }
   },
   computed: {
+    layoutClass() {
+      return this.atIndex ? '' : 'chart-con-width-nav';
+    },
     ...mapState(["defaultHeight"]),
     normalSrc() {
       return this.theme === "light" ? Normal : NormalDark;
@@ -311,7 +319,7 @@ export default {
         .sort((a, b) => a - b)
         .reverse()[0];
       this.typeStyle = {
-        marginTop: `${maxCount * 20 - 200}px`
+        marginTop: `${maxCount * 1.25 - 12.5}rem`
       };
       let lineList = [];
       const format = this.formatNumber;
@@ -330,6 +338,7 @@ export default {
       linkList.forEach(item => {
         let borderColor = markAreaBorder,
           borderWidth = 1;
+
         if (height && startHeight - height == item.x) {
           borderColor = markAreaActiveBorder;
           borderWidth = 2;
@@ -342,8 +351,10 @@ export default {
               borderWidth
             }
           },
-          { coord: [item.x + 0.376, 1] }
-        ]);
+          {
+            coord: [item.x + 0.376, 1]
+          }
+          ]);
       });
       var option = {
         xAxis: {
@@ -460,47 +471,92 @@ export default {
 </script>
 <style lang="scss" scoped>
 .ticket-chain {
-  border-radius: 8px;
-  box-shadow: 0px 1px 7px 9px rgba(0, 0, 0, 0.03);
-  background: var(--board-bg-color);
+  $canvas-height: 10rem;
+  @include panel;
+
+  max-width: 100%;
+  display: flex;
+  position: relative;
+  padding-top: 0;
+  margin-bottom: 0;
+
+  .block-title {
+    @include chartInfo(red, 768px);
+  }
+
   .chart-con {
     width: 100%;
-    .chart {
-      width: 100%;
-      height: 350px;
+    padding-bottom: 2 * $vertical-space;
+    &.chart-con-width-nav  {
+      padding-bottom: 3 * $vertical-space;
+    }
+
+
+    .chart-scroll-wrap {
+      width: inherit;
+      max-width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      height: $canvas-height;
+      padding-bottom: 2 * $vertical-space;
+      // Start scroll from right
+      direction:rtl;
+
+      .chart {
+        // height/width must be defined for chart rendering.
+        width: 120rem;
+        height: $canvas-height + 4rem;
+      }
     }
   }
+
   .block-type {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $horizontal-space $vertical-space;
+    width: inherit;
     z-index: 10;
+
     .arrow {
-      position: absolute;
-      top: -10px;
-      font-size: 30px;
+      display: inline-block;
       color: var(--main-text-color);
       cursor: pointer;
+      line-height: 2rem;
+      position: absolute;
+      bottom: $vertical-space;
+
+      // Icon prev/next size.
+      [class^='el-icon-']:before {
+        font-size: 2rem;
+        font-weight: bold;
+        vertical-align: middle;
+      }
       &.left {
-        left: 20px;
+        left: $horizontal-space;
       }
       &.right {
-        right: 20px;
+        right: $horizontal-space;
       }
     }
   }
+
   .block-type div.type-list {
-    width: 500px;
-    margin: 0 auto;
-    padding-bottom: 20px;
+    width: 100%;
+    text-align: center;
     color: var(--main-text-color);
     span {
-      margin-left: 20px;
+      margin-left: $horizontal-space / 2;
     }
+    vertical-align: middle;
+
     i {
       display: inline-block;
-      width: 10px;
-      height: 10px;
+      width: .625rem;
+      height: .625rem;
       border-radius: 50%;
-      margin-right: 5px;
+      margin-right: .3rem;
       &.null {
         background: var(--null-block-bg-color);
       }
@@ -509,8 +565,8 @@ export default {
       }
       &.normal {
         border: 1px solid var(--other-block-border-color);
-        width: 8px;
-        height: 8px;
+        width: .625rem;
+        height: .625rem;
       }
     }
   }
